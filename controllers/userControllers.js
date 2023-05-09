@@ -14,8 +14,6 @@ module.exports = {
     },
     getSingleUser(req, res) {
         User.findById(req.params.userId)
-            // .populate('thoughts')
-            // .populate('friends')
             .then((users) => res.status(200).json(users))
             .catch((err) => res.status(500).json(err));
     },
@@ -37,7 +35,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with that ID' })
-                    : Thoughts.deleteMany({ _id: { $in: user.thoughts } })
+                    : Thought.deleteMany({ _id: { $in: user.thoughts } })
             )
             .then(() => res.json({ message: 'User and thoughts deleted!' }))
             .catch((err) => res.status(500).json(err));
